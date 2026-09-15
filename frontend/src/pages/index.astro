@@ -1,0 +1,59 @@
+---
+import Hero from '../components/Hero.astro'
+import { sanityClient } from '../lib/sanity'
+import { homePageQuery } from '../lib/queries'
+
+const page = await sanityClient.fetch(homePageQuery)
+
+if (!page) {
+  throw new Error('Home Page content was not found in Sanity.')
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{page.seo?.title ?? page.title}</title>
+
+    {page.seo?.description && (
+      <meta
+        name="description"
+        content={page.seo.description}
+      />
+    )}
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Global Styles -->
+    <style is:global>
+      :root {
+        --font-heading: "Manrope", sans-serif;
+        --font-body: "Inter", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <Hero hero={page.hero} />
+    </main>
+  </body>
+</html>

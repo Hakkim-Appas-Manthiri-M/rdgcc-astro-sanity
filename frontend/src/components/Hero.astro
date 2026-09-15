@@ -1,0 +1,218 @@
+---
+interface Props {
+  hero: {
+    eyebrow?: string
+    heading: string
+    description?: string
+    cta?: {
+      label: string
+      url: string
+      icon?: string
+      openInNewTab?: boolean
+    }
+  }
+}
+
+const { hero } = Astro.props
+---
+
+<section class="hero">
+  <div class="hero__content">
+    {hero.eyebrow && <p class="eyebrow">{hero.eyebrow}</p>}
+
+    <h1>{hero.heading}</h1>
+
+    {hero.description && <p class="description">{hero.description}</p>}
+
+    {hero.cta && (
+      <a
+        class="cta"
+        href={hero.cta.url}
+        target={hero.cta.openInNewTab ? '_blank' : undefined}
+        rel={hero.cta.openInNewTab ? 'noopener noreferrer' : undefined}
+      >
+        <span>{hero.cta.label}</span>
+
+        {(!hero.cta.icon || hero.cta.icon === 'arrow-right') && (
+          <svg
+            class="cta__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        )}
+      </a>
+    )}
+  </div>
+
+  <div class="visual" aria-hidden="true">
+    <div class="panel"></div>
+    <div class="shape shape--top"></div>
+    <div class="shape shape--bottom"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    align-items: center;
+    gap: 60px;
+    max-width: 1400px;
+    min-height: 645px;
+    margin: auto;
+    padding: 70px 60px;
+    background: #fff;
+    font-family: var(--font-body);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  h1 {
+    margin: 0;
+    color: #075082;
+    font-family: var(--font-heading);
+    font-size: clamp(42px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -2px;
+  }
+
+  .eyebrow {
+    margin: 0 0 15px;
+    color: #075082;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .description {
+    max-width: 680px;
+    margin: 28px 0 0;
+    color: #202020;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 34px;
+    padding: 13px 28px;
+    border-radius: 50px;
+    background: #07558a;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgb(7 85 138 / 18%);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cta:hover {
+    background: #064b79;
+    box-shadow: 0 10px 24px rgb(7 85 138 / 22%);  
+  }
+
+  .cta__icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .cta:hover .cta__icon {
+    transform: translateX(5px);
+  }
+
+  .cta:focus-visible {
+    outline: 3px solid rgb(7 85 138 / 30%);
+    outline-offset: 4px;
+  }
+
+  .visual {
+    position: relative;
+    height: 500px;
+  }
+
+  .panel {
+    position: absolute;
+    inset: 75px 50px 45px;
+    border-radius: 25px;
+    background: #e9eef4;
+  }
+
+  .panel::after {
+    content: "";
+    position: absolute;
+    inset: 40px;
+    border-radius: 22px;
+    background: #dfe6ee;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 22px;
+  }
+
+  .shape--top {
+    top: 0;
+    right: 0;
+    width: 185px;
+    height: 185px;
+    background: #aaa;
+  }
+
+  .shape--bottom {
+    bottom: 0;
+    left: 0;
+    width: 185px;
+    height: 185px;
+    background: #4b82aa;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 70px 40px;
+    }
+
+    .visual {
+      height: 420px;
+    }
+  }
+
+  @media (max-width: 600px) {
+  .hero {
+    display: block;
+    padding: 50px 20px 60px;
+  }
+
+  h1 {
+    font-size: 40px;
+    letter-spacing: -1.5px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .visual {
+    display: none;
+  }
+}
+</style>
