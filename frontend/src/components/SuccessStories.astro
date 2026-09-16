@@ -1,0 +1,491 @@
+---
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChartLine,
+  Code2,
+  Inbox,
+  ShoppingCart,
+  Users,
+} from 'lucide-react'
+
+import { urlFor } from '../lib/sanity'
+
+interface CTA {
+  label: string
+  url: string
+  icon?: string
+  openInNewTab?: boolean
+}
+
+interface StoryImage {
+  asset?: {
+    _ref?: string
+  }
+}
+
+interface SuccessStory {
+  category?: string
+  company: string
+  image?: StoryImage
+  icon?: string
+  title: string
+  description?: string
+  cta?: CTA
+}
+
+interface Props {
+  successStories: {
+    heading: string
+    description?: string
+    items: SuccessStory[]
+    moreStories?: {
+      eyebrow?: string
+      heading: string
+      cta?: CTA
+    }
+  }
+}
+
+const { successStories } = Astro.props
+---
+
+<section class="success-stories">
+  <div class="success-stories__container">
+
+    <header class="success-stories__header">
+      <h2>{successStories.heading}</h2>
+
+      {successStories.description && (
+        <p>{successStories.description}</p>
+      )}
+    </header>
+
+    <div class="success-stories__grid">
+
+      {successStories.items.map((story, index) => (
+        <article class="success-story">
+
+          <div class="success-story__top">
+            {story.category && (
+              <span class="success-story__category">
+                {story.category}
+              </span>
+            )}
+
+            <h3>{story.company}</h3>
+          </div>
+
+          {story.image?.asset && (
+            <div class="success-story__image">
+              <img
+                src={urlFor(story.image)
+                  .width(900)
+                  .height(500)
+                  .fit('crop')
+                  .auto('format')
+                  .url()}
+                alt={story.company}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          )}
+
+          <div class="success-story__content">
+
+            {story.icon && (
+              <div class="success-story__icon" aria-hidden="true">
+
+                {story.icon === 'code' && (
+                  <Code2 size={23} strokeWidth={1.8} />
+                )}
+
+                {story.icon === 'inbox' && (
+                  <Inbox size={23} strokeWidth={1.8} />
+                )}
+
+                {story.icon === 'chart-line' && (
+                  <ChartLine size={23} strokeWidth={1.8} />
+                )}
+
+                {story.icon === 'users' && (
+                  <Users size={23} strokeWidth={1.8} />
+                )}
+
+                {story.icon === 'shopping-cart' && (
+                  <ShoppingCart size={23} strokeWidth={1.8} />
+                )}
+
+              </div>
+            )}
+
+            <h4>{story.title}</h4>
+
+            {story.description && (
+              <p>{story.description}</p>
+            )}
+
+            {story.cta && (
+              <a
+                href={story.cta.url}
+                class="success-story__cta"
+                target={
+                  story.cta.openInNewTab ? '_blank' : undefined
+                }
+                rel={
+                  story.cta.openInNewTab
+                    ? 'noopener noreferrer'
+                    : undefined
+                }
+              >
+                <span>{story.cta.label}</span>
+
+                {index !== 3 && story.cta.icon === 'arrow-right' && (
+                  <ArrowRight
+                    size={19}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                )}
+              </a>
+            )}
+
+          </div>
+        </article>
+      ))}
+
+      {successStories.moreStories && (
+        <a
+          href={successStories.moreStories.cta?.url ?? '#'}
+          class="success-story success-story--more"
+          target={successStories.moreStories.cta?.openInNewTab ? '_blank' : undefined}
+          rel={
+             successStories.moreStories.cta?.openInNewTab
+             ? 'noopener noreferrer'
+             : undefined
+          }
+        >
+
+        <div
+          class="success-story--more__icon"
+          aria-hidden="true"
+        >
+            <ArrowUpRight
+               size={24}
+               strokeWidth={1.8}
+            />
+        </div>
+
+        <div class="success-story--more__content">
+
+            {successStories.moreStories.eyebrow && (
+                <span class="success-story--more__eyebrow">
+                    {successStories.moreStories.eyebrow}
+                </span>
+            )}
+
+            <h3>{successStories.moreStories.heading}</h3>
+
+        </div>
+
+        {successStories.moreStories.cta && (
+        <div class="success-story--more__cta">
+          <span>
+            {successStories.moreStories.cta.label}
+          </span>
+
+            <ArrowRight
+              size={19}
+              strokeWidth={1.8}
+             aria-hidden="true"
+            />
+        </div>
+      )}
+     </a> 
+    )}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .success-stories {
+    width: 100%;
+    padding: 90px 0 100px;
+    background: #f5f8fb;
+    font-family: var(--font-body);
+  }
+
+  .success-stories__container {
+    width: min(1375px, calc(100% - 80px));
+    margin: 0 auto;
+  }
+
+  .success-stories__header {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    text-align: center;
+  }
+
+  .success-stories__header h2 {
+    margin: 0;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .success-stories__header p {
+    margin: 18px auto 0;
+    color: #292929;
+    font-size: 17px;
+    line-height: 1.40;
+  }
+
+  .success-stories__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 32px;
+  }
+
+  .success-story {
+    display: flex;
+    flex-direction: column;
+    min-height: 575px;
+    padding: 22px 30px 20px;
+    border: 1px solid #e0e6ec;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .success-story__category {
+    display: block;
+    color: #004681;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .success-story__top h3 {
+    margin: 6px 0 0;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 710;
+    line-height: 1.25;
+  }
+
+  .success-story__image {
+    margin-top: 20px;
+    aspect-ratio: 1.9 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #eef2f5;
+  }
+
+  .success-story__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .success-story__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 19px;
+  }
+
+  .success-story__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #004681;
+    color: #ffffff;
+  }
+
+  .success-story__content h4 {
+    margin: 16px 0 0;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .success-story__content p {
+    margin: 14px 0 0;
+    color: #292929;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .success-story__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 20px;
+    color: #004681;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .success-story__cta span {
+    text-decoration: none;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .success-story__cta:hover span {
+    text-decoration: underline;
+  }
+
+  .success-story--more {
+  padding: 30px;
+  border-color: #004681;
+  background: #004681;
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.success-story--more:hover {
+  border-color: #004681;
+  transform: translateY(-6px);
+}
+
+.success-story--more__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: background-color 0.25s ease;
+}
+
+.success-story--more:hover .success-story--more__icon {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.success-story--more__content {
+  margin-top: 34px;
+}
+
+.success-story--more__eyebrow {
+  display: block;
+  color: #ffffffb4;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.success-story--more h3 {
+  max-width: 300px;
+  margin: 12px 0 0;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.success-story--more__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 24px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #ffffffa8;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.25s ease;
+}
+
+.success-story--more__cta:hover {
+  text-decoration-color: #ffffff;
+}
+
+  @media (max-width: 900px) {
+    .success-stories__container {
+      width: min(100% - 60px, 900px);
+    }
+
+    .success-stories__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .success-story {
+      min-height: 560px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .success-stories {
+      padding: 70px 0 80px;
+    }
+
+    .success-stories__container {
+      width: calc(100% - 40px);
+    }
+
+    .success-stories__header {
+      margin-bottom: 36px;
+    }
+
+    .success-stories__header h2 {
+      font-size: 30px;
+    }
+
+    .success-stories__header p {
+      font-size: 16px;
+    }
+
+    .success-stories__grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .success-story {
+      min-height: 0;
+      padding: 22px;
+    }
+
+    .success-story__image {
+      margin-top: 20px;
+    }
+
+    .success-story__content {
+      padding-top: 18px;
+    }
+
+    .success-story__content h4 {
+      font-size: 21px;
+    }
+
+    .success-story--more {
+      min-height: 360px;
+      padding: 26px;
+    }
+  }
+</style>

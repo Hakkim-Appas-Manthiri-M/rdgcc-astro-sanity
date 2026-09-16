@@ -33,14 +33,12 @@ export const cta = defineType({
       name: 'label',
       title: 'Button Label',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'url',
       title: 'Button URL',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
 
     defineField({

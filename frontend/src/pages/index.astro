@@ -1,10 +1,11 @@
 ---
-import Hero from '../components/Hero.astro';
-import TrackRecord from '../components/TrackRecord.astro';
-import Services from '../components/Services.astro';
-import Process from '../components/Process.astro';
-import { sanityClient } from '../lib/sanity';
-import { homePageQuery } from '../lib/queries';
+import Hero from '../components/Hero.astro'
+import TrackRecord from '../components/TrackRecord.astro'
+import Services from '../components/Services.astro'
+import Process from '../components/Process.astro'
+import SuccessStories from '../components/SuccessStories.astro'
+import { sanityClient } from '../lib/sanity'
+import { homePageQuery } from '../lib/queries'
 
 const page = await sanityClient.fetch(homePageQuery)
 
@@ -28,7 +29,6 @@ if (!page) {
       />
     )}
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,7 +36,6 @@ if (!page) {
       rel="stylesheet"
     />
 
-    <!-- Global Styles -->
     <style is:global>
       :root {
         --font-heading: "Manrope", sans-serif;
@@ -57,12 +56,10 @@ if (!page) {
   <body>
     <main>
       <Hero hero={page.hero} />
-
       <TrackRecord trackRecord={page.trackRecord} />
-
       <Services services={page.services} />
-
       <Process process={page.process} />
+      <SuccessStories successStories={page.successStories} />
     </main>
   </body>
 </html>

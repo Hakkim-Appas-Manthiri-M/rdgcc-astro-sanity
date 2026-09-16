@@ -4,6 +4,7 @@ import { seo } from './seo';
 import { trackRecord } from './trackRecord';
 import { services } from './services';
 import { process } from './process';
+import { successStories } from './successStories';
 import { homePage } from './homePage';
 
-export const schemaTypes = [cta, seo, hero, trackRecord, services, process ,homePage];
+export const schemaTypes = [cta, seo, hero, trackRecord, services, process, successStories, homePage];

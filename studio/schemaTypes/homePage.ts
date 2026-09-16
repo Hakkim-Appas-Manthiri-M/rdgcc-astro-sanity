@@ -38,6 +38,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'successStories',
+            title: 'Success Stories',
+            type: 'successStories',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

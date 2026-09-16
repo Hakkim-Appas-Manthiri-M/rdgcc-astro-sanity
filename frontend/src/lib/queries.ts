@@ -47,6 +47,39 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  successStories {
+    heading,
+    description,
+
+    items[] {
+      category,
+      company,
+      title,
+      description,
+      image,
+      icon,
+      
+      cta {
+        label,
+        url,
+        icon,
+        openInNewTab
+      }
+    },
+
+    moreStories {
+      eyebrow,
+      heading,
+
+      cta {
+        label,
+        url,
+        icon,
+        openInNewTab
+      }
+    }
+  },
+
   seo {
     title,
     description
