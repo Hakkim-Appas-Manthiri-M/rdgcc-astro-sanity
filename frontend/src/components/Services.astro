@@ -1,4 +1,6 @@
 ---
+import { ArrowUpRight } from 'lucide-react'
+
 interface CTA {
   label: string
   url: string
@@ -45,37 +47,20 @@ const { services } = Astro.props
                   : undefined
               }
             >
-              <span class="cta-label">
-                {service.cta.label}
-              </span>
+              <span class="cta-label">{service.cta.label}</span>
 
               {service.cta.icon === 'arrow-right' && (
                 <span class="cta-icon" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 18L18 6"
-                      stroke="currentColor"
-                      stroke-width="1.7"
-                      stroke-linecap="round"
-                    />
-                    <path
-                      d="M10 6H18V14"
-                      stroke="currentColor"
-                      stroke-width="1.7"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                  <ArrowUpRight size={18} strokeWidth={1.7} />
                 </span>
               )}
             </a>
           )}
 
-          <span class="service-card__circle"></span>
+          <span
+            class="service-card__circle"
+            aria-hidden="true"
+          ></span>
         </article>
       ))}
     </div>
@@ -86,7 +71,7 @@ const { services } = Astro.props
   .services {
     width: 100%;
     padding-bottom: 110px;
-    background: #ffffff;
+    background: #fff;
     overflow: visible;
     font-family: var(--font-body);
   }
@@ -101,10 +86,11 @@ const { services } = Astro.props
     grid-template-columns: repeat(4, 1fr);
   }
 
-  /* Card */
+  /* Cards */
 
   .service-card {
     position: relative;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -112,12 +98,8 @@ const { services } = Astro.props
     min-height: 650px;
     padding: 82px 43px 30px;
 
-    background: #ffffff;
-
-    border-top: 1px solid #d8dee5;
-    border-right: 1px solid #d8dee5;
-    border-bottom: 1px solid #d8dee5;
-    border-left: 1px solid #d8dee5;
+    border: 1px solid #d8dee5;
+    background: #fff;
 
     overflow: hidden;
     z-index: 1;
@@ -184,10 +166,6 @@ const { services } = Astro.props
     transition: color 0.3s ease;
   }
 
-  .cta-label {
-    display: inline-block;
-  }
-
   .cta-icon {
     display: flex;
     align-items: center;
@@ -198,7 +176,6 @@ const { services } = Astro.props
     flex: 0 0 48px;
 
     border-radius: 50%;
-
     color: #075082;
 
     transition:
@@ -207,12 +184,7 @@ const { services } = Astro.props
       color 0.3s ease;
   }
 
-  .cta-icon svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* Bottom-right partial circle */
+  /* Bottom-right circle */
 
   .service-card__circle {
     position: absolute;
@@ -248,11 +220,11 @@ const { services } = Astro.props
   .service-card:hover h2,
   .service-card:hover p,
   .service-card:hover .service-card__cta {
-    color: #ffffff;
+    color: #fff;
   }
 
   .service-card:hover .cta-icon {
-    background: #ffffff;
+    background: #fff;
     color: #075082;
     transform: scale(1.04);
   }
@@ -291,7 +263,8 @@ const { services } = Astro.props
     .service-card p {
       max-width: 330px;
       margin-top: 65px;
-      font-size: 18px;
+      font-size: 20px;
+      line-height: 1.55;
     }
   }
 
@@ -300,10 +273,6 @@ const { services } = Astro.props
   @media (max-width: 700px) {
     .services {
       padding-bottom: 70px;
-    }
-
-    .services__container {
-      width: 100%;
     }
 
     .services__grid {
@@ -341,7 +310,6 @@ const { services } = Astro.props
     .service-card:hover .service-card__circle {
       width: 450px;
       height: 450px;
-
       right: -175px;
       bottom: -175px;
     }

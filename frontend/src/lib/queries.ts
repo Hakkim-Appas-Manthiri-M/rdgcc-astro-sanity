@@ -36,6 +36,17 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  process {
+    heading,
+    description,
+    steps[] {
+      number,
+      icon,
+      title,
+      description
+    }
+  },
+
   seo {
     title,
     description

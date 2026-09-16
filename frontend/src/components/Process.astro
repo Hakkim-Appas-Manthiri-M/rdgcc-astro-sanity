@@ -1,0 +1,314 @@
+---
+import { Search, Palette, Rocket, Settings } from 'lucide-react'
+
+interface ProcessStep {
+  number: string
+  icon?: string
+  title: string
+  description?: string
+}
+
+interface Props {
+  process: {
+    heading: string
+    description?: string
+    steps: ProcessStep[]
+  }
+}
+
+const { process } = Astro.props
+---
+
+<section class="process">
+  <div class="process__container">
+    <header class="process__header">
+      <h2>{process.heading}</h2>
+
+      {process.description && <p>{process.description}</p>}
+    </header>
+
+    <div class="process__grid">
+      {process.steps.map((step) => (
+        <article class="process-card">
+          <div class="process-card__top">
+            {step.icon && (
+              <div class="process-card__icon" aria-hidden="true">
+                {step.icon === 'search' && <Search size={34} strokeWidth={1.8} />}
+                {step.icon === 'palette' && <Palette size={34} strokeWidth={1.8} />}
+                {step.icon === 'rocket' && <Rocket size={34} strokeWidth={1.8} />}
+                {step.icon === 'settings' && <Settings size={34} strokeWidth={1.8} />}
+              </div>
+            )}
+
+            <span class="process-card__number">{step.number}</span>
+          </div>
+
+          <div class="process-card__content">
+            <h3>{step.title}</h3>
+
+            {step.description && <p>{step.description}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    width: 100%;
+    padding: 0 0 110px;
+    background: #ffffff;
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  .process__container {
+    width: min(1375px, calc(100% - 80px));
+    margin: 0 auto;
+  }
+
+  .process__header {
+    margin: 0 auto 68px;
+    text-align: center;
+  }
+
+  .process__header h2 {
+    margin: 0;
+    color: #075082;
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .process__header p {
+    max-width: 950px;
+    margin: 22px auto 0;
+    color: #202020;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .process-card {
+    position: relative;
+    min-height: 310px;
+    padding: 34px;
+    border: 1px solid #e4e9ef;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(30, 60, 90, 0.055);
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .process-card::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+    background: #075082;
+    z-index: 4;
+    pointer-events: none;
+    transition: width 0.4s ease;
+  }
+
+  .process-card::after {
+    content: "";
+    position: absolute;
+    top: -165px;
+    right: -165px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: #f1f4f8;
+    opacity: 0;
+    transform: scale(0.65);
+    z-index: 1;
+    pointer-events: none;
+    transition:
+      opacity 0.4s ease,
+      transform 0.75s ease;
+  }
+
+  .process-card__top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .process-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 13px;
+    background: #f1f5f8;
+    color: #075082;
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .process-card__number {
+    position: relative;
+    z-index: 3;
+    padding-top: 2px;
+    color: #075082;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    transition: color 0.35s ease;
+  }
+
+  .process-card__content {
+    position: relative;
+    z-index: 3;
+    margin-top: 32px;
+  }
+
+  .process-card h3 {
+    margin: 0;
+    color: #075082;
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    transition:
+      color 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .process-card p {
+    max-width: 285px;
+    margin: 14px 0 0;
+    color: #292929;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.55;
+    transition: color 0.35s ease;
+  }
+
+  .process-card:hover {
+    z-index: 10;
+    transform: translateY(-9px);
+    border-color: #d4dfe9;
+    box-shadow: 0 18px 36px rgba(30, 60, 90, 0.09);
+  }
+
+  .process-card:hover::before {
+    width: 100%;
+  }
+
+  .process-card:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .process-card:hover .process-card__icon {
+    background: #075082;
+    color: #ffffff;
+    transform: scale(1.02);
+  }
+
+  .process-card:hover .process-card__number {
+    color: #7899b1;
+  }
+
+  .process-card:hover h3 {
+    transform: translateX(7px);
+  }
+
+  @media (max-width: 900px) {
+    .process {
+      padding-bottom: 90px;
+    }
+
+    .process__container {
+      width: 100%;
+    }
+
+    .process__header {
+      padding: 0 40px;
+      margin-bottom: 55px;
+    }
+
+    .process__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 0 40px;
+    }
+
+    .process-card {
+      min-height: 300px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .process {
+      padding-bottom: 80px;
+    }
+
+    .process__header {
+      padding: 0 28px;
+      margin-bottom: 45px;
+    }
+
+    .process__header h2 {
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .process__header p {
+      margin-top: 18px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .process__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0 20px;
+    }
+
+    .process-card {
+      min-height: 270px;
+      padding: 28px;
+    }
+
+    .process-card__content {
+      margin-top: 28px;
+    }
+
+    .process-card h3 {
+      font-size: 21px;
+    }
+
+    .process-card p {
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    .process-card:hover {
+      transform: translateY(-7px);
+    }
+  }
+</style>

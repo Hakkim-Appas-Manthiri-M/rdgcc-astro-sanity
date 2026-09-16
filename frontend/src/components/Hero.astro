@@ -1,4 +1,6 @@
 ---
+import { ArrowRight } from 'lucide-react'
+
 interface Props {
   hero: {
     eyebrow?: string
@@ -22,32 +24,27 @@ const { hero } = Astro.props
 
     <h1>{hero.heading}</h1>
 
-    {hero.description && <p class="description">{hero.description}</p>}
+    {hero.description && (
+      <p class="description">{hero.description}</p>
+    )}
 
     {hero.cta && (
       <a
         class="cta"
         href={hero.cta.url}
         target={hero.cta.openInNewTab ? '_blank' : undefined}
-        rel={hero.cta.openInNewTab ? 'noopener noreferrer' : undefined}
+        rel={
+          hero.cta.openInNewTab
+            ? 'noopener noreferrer'
+            : undefined
+        }
       >
         <span>{hero.cta.label}</span>
 
         {(!hero.cta.icon || hero.cta.icon === 'arrow-right') && (
-          <svg
-            class="cta__icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M5 12h14M13 6l6 6-6 6"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <span class="cta__icon" aria-hidden="true">
+            <ArrowRight size={19} strokeWidth={1.8} />
+          </span>
         )}
       </a>
     )}
@@ -63,13 +60,15 @@ const { hero } = Astro.props
 <style>
   .hero {
     display: grid;
-    grid-template-columns: 1.15fr .85fr;
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
     gap: 60px;
+
     max-width: 1400px;
     min-height: 645px;
     margin: auto;
     padding: 70px 60px;
+
     background: #fff;
     font-family: var(--font-body);
   }
@@ -109,25 +108,35 @@ const { hero } = Astro.props
     display: inline-flex;
     align-items: center;
     gap: 16px;
+
     margin-top: 34px;
     padding: 13px 28px;
+
     border-radius: 50px;
     background: #07558a;
     color: #fff;
+
     font-family: var(--font-body);
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
+
     box-shadow: 0 8px 20px rgb(7 85 138 / 18%);
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .cta:hover {
     background: #064b79;
-    box-shadow: 0 10px 24px rgb(7 85 138 / 22%);  
+    box-shadow: 0 10px 24px rgb(7 85 138 / 22%);
   }
 
   .cta__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 19px;
     height: 19px;
     flex-shrink: 0;
@@ -223,22 +232,22 @@ const { hero } = Astro.props
   }
 
   @media (max-width: 600px) {
-  .hero {
-    display: block;
-    padding: 50px 20px 60px;
-  }
+    .hero {
+      display: block;
+      padding: 50px 20px 60px;
+    }
 
-  h1 {
-    font-size: 40px;
-    letter-spacing: -1.5px;
-  }
+    h1 {
+      font-size: 40px;
+      letter-spacing: -1.5px;
+    }
 
-  .description {
-    font-size: 16px;
-  }
+    .description {
+      font-size: 16px;
+    }
 
-  .visual {
-    display: none;
+    .visual {
+      display: none;
+    }
   }
-}
 </style>

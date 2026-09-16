@@ -2,6 +2,7 @@
 import Hero from '../components/Hero.astro';
 import TrackRecord from '../components/TrackRecord.astro';
 import Services from '../components/Services.astro';
+import Process from '../components/Process.astro';
 import { sanityClient } from '../lib/sanity';
 import { homePageQuery } from '../lib/queries';
 
@@ -58,8 +59,10 @@ if (!page) {
       <Hero hero={page.hero} />
 
       <TrackRecord trackRecord={page.trackRecord} />
-      
+
       <Services services={page.services} />
+
+      <Process process={page.process} />
     </main>
   </body>
 </html>

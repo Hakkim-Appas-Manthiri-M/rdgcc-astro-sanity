@@ -32,6 +32,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'process',
+            title: 'How We Work',
+            type: 'process',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',
