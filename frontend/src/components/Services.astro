@@ -1,0 +1,349 @@
+---
+interface CTA {
+  label: string
+  url: string
+  icon?: string
+  openInNewTab?: boolean
+}
+
+interface Service {
+  title: string
+  description?: string
+  cta?: CTA
+}
+
+interface Props {
+  services: {
+    items: Service[]
+  }
+}
+
+const { services } = Astro.props
+---
+
+<section class="services">
+  <div class="services__container">
+    <div class="services__grid">
+      {services.items.map((service) => (
+        <article class="service-card">
+          <div class="service-card__content">
+            <h2>{service.title}</h2>
+
+            {service.description && (
+              <p>{service.description}</p>
+            )}
+          </div>
+
+          {service.cta && (
+            <a
+              class="service-card__cta"
+              href={service.cta.url}
+              target={service.cta.openInNewTab ? '_blank' : undefined}
+              rel={
+                service.cta.openInNewTab
+                  ? 'noopener noreferrer'
+                  : undefined
+              }
+            >
+              <span class="cta-label">
+                {service.cta.label}
+              </span>
+
+              {service.cta.icon === 'arrow-right' && (
+                <span class="cta-icon" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 18L18 6"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M10 6H18V14"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              )}
+            </a>
+          )}
+
+          <span class="service-card__circle"></span>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    width: 100%;
+    padding-bottom: 110px;
+    background: #ffffff;
+    overflow: visible;
+    font-family: var(--font-body);
+  }
+
+  .services__container {
+    width: min(1375px, calc(100% - 80px));
+    margin: 0 auto;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Card */
+
+  .service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 650px;
+    padding: 82px 43px 30px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #d8dee5;
+    border-right: 1px solid #d8dee5;
+    border-bottom: 1px solid #d8dee5;
+    border-left: 1px solid #d8dee5;
+
+    overflow: hidden;
+    z-index: 1;
+
+    transition:
+      transform 0.35s ease,
+      background-color 0.35s ease;
+  }
+
+  .service-card__content {
+    position: relative;
+    z-index: 3;
+  }
+
+  .service-card h2 {
+    max-width: 285px;
+    margin: 0;
+
+    color: #075082;
+
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -1px;
+
+    transition: color 0.3s ease;
+  }
+
+  .service-card p {
+    max-width: 285px;
+    margin: 78px 0 0;
+
+    color: #202020;
+
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.55;
+
+    transition: color 0.3s ease;
+  }
+
+  /* CTA */
+
+  .service-card__cta {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    color: #075082;
+
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+  }
+
+  .cta-label {
+    display: inline-block;
+  }
+
+  .cta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+
+    border-radius: 50%;
+
+    color: #075082;
+
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .cta-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Bottom-right partial circle */
+
+  .service-card__circle {
+    position: absolute;
+    z-index: 2;
+
+    width: 310px;
+    height: 310px;
+
+    right: -155px;
+    bottom: -155px;
+
+    border: 1px solid #b8bec4;
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    transition:
+      width 0.45s ease,
+      height 0.45s ease,
+      right 0.45s ease,
+      bottom 0.45s ease,
+      border-color 0.35s ease;
+  }
+
+  /* Hover */
+
+  .service-card:hover {
+    z-index: 20;
+    transform: translateY(-16px);
+    background: #075082;
+  }
+
+  .service-card:hover h2,
+  .service-card:hover p,
+  .service-card:hover .service-card__cta {
+    color: #ffffff;
+  }
+
+  .service-card:hover .cta-icon {
+    background: #ffffff;
+    color: #075082;
+    transform: scale(1.04);
+  }
+
+  .service-card:hover .service-card__circle {
+    width: 470px;
+    height: 470px;
+
+    right: -185px;
+    bottom: -185px;
+
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Tablet / 1024px */
+
+  @media (max-width: 1100px) {
+    .services__container {
+      width: 100%;
+    }
+
+    .services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .service-card {
+      min-height: 600px;
+      padding: 70px 42px 28px;
+    }
+
+    .service-card h2 {
+      max-width: 330px;
+      font-size: 36px;
+    }
+
+    .service-card p {
+      max-width: 330px;
+      margin-top: 65px;
+      font-size: 18px;
+    }
+  }
+
+  /* Mobile */
+
+  @media (max-width: 700px) {
+    .services {
+      padding-bottom: 70px;
+    }
+
+    .services__container {
+      width: 100%;
+    }
+
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card {
+      min-height: 500px;
+      padding: 55px 28px 26px;
+    }
+
+    .service-card h2 {
+      max-width: 320px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .service-card p {
+      max-width: 330px;
+      margin-top: 48px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .cta-icon {
+      width: 46px;
+      height: 46px;
+      flex-basis: 46px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-card:hover .service-card__circle {
+      width: 450px;
+      height: 450px;
+
+      right: -175px;
+      bottom: -175px;
+    }
+  }
+</style>

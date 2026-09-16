@@ -23,6 +23,19 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  services {
+    items[] {
+      title,
+      description,
+      cta {
+        label,
+        url,
+        icon,
+        openInNewTab
+      }
+    }
+  },
+
   seo {
     title,
     description
