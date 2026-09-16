@@ -20,6 +20,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'trackRecord',
+            title: 'Track Record',
+            type: 'trackRecord',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

@@ -1,6 +1,7 @@
 import { cta } from './cta';
 import { hero } from './hero';
 import { seo } from './seo';
+import { trackRecord } from './trackRecord';
 import { homePage } from './homePage';
 
-export const schemaTypes = [cta, seo, hero, homePage];
+export const schemaTypes = [cta, seo, hero, trackRecord, homePage];

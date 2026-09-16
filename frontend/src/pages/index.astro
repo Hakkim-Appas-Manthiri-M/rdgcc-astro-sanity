@@ -1,7 +1,8 @@
 ---
-import Hero from '../components/Hero.astro'
-import { sanityClient } from '../lib/sanity'
-import { homePageQuery } from '../lib/queries'
+import Hero from '../components/Hero.astro';
+import TrackRecord from '../components/TrackRecord.astro';
+import { sanityClient } from '../lib/sanity';
+import { homePageQuery } from '../lib/queries';
 
 const page = await sanityClient.fetch(homePageQuery)
 
@@ -54,6 +55,7 @@ if (!page) {
   <body>
     <main>
       <Hero hero={page.hero} />
+      <TrackRecord trackRecord={page.trackRecord} />
     </main>
   </body>
 </html>

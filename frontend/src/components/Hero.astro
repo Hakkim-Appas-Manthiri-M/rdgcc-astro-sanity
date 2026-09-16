@@ -85,7 +85,7 @@ const { hero } = Astro.props
     color: #075082;
     font-family: var(--font-heading);
     font-size: clamp(42px, 4vw, 56px);
-    font-weight: 400;
+    font-weight: 460;
     line-height: 1.08;
     letter-spacing: -2px;
   }
@@ -150,7 +150,7 @@ const { hero } = Astro.props
 
   .panel {
     position: absolute;
-    inset: 75px 50px 45px;
+    inset: 50px 60px 40px;
     border-radius: 25px;
     background: #e9eef4;
   }
@@ -171,28 +171,54 @@ const { hero } = Astro.props
   .shape--top {
     top: 0;
     right: 0;
-    width: 185px;
-    height: 185px;
+    width: 170px;
+    height: 170px;
     background: #aaa;
   }
 
   .shape--bottom {
     bottom: 0;
     left: 0;
-    width: 185px;
-    height: 185px;
+    width: 170px;
+    height: 170px;
     background: #4b82aa;
+  }
+
+  @media (max-width: 1100px) {
+    .visual {
+      height: 400px;
+    }
+
+    .panel {
+      inset: 55px 20px 30px;
+    }
+
+    .shape--top,
+    .shape--bottom {
+      width: 135px;
+      height: 135px;
+    }
   }
 
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
       min-height: auto;
-      padding: 70px 40px;
+      padding: 90px 40px;
     }
 
     .visual {
-      height: 420px;
+      height: 600px;
+    }
+
+    .panel {
+      inset: 55px 70px 30px;
+    }
+
+    .shape--top,
+    .shape--bottom {
+      width: 200px;
+      height: 200px;
     }
   }
 
