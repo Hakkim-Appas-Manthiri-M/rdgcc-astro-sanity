@@ -1,7 +1,7 @@
 ---
 import { Search, Palette, Rocket, Settings } from 'lucide-react'
 
-interface ProcessStep {
+interface WorksStep {
   number: string
   icon?: string
   title: string
@@ -9,44 +9,64 @@ interface ProcessStep {
 }
 
 interface Props {
-  process: {
+  howToWork: {
     heading: string
     description?: string
-    steps: ProcessStep[]
+    steps: WorksStep[]
   }
 }
 
-const { process } = Astro.props
+const { howToWork } = Astro.props
 ---
 
-<section class="process">
-  <div class="process__container">
-    <header class="process__header">
-      <h2>{process.heading}</h2>
+<section class="how-to-work">
+  <div class="how-to-work__container">
+    <header class="how-to-work__header">
+      <h2>{howToWork.heading}</h2>
 
-      {process.description && <p>{process.description}</p>}
+      {howToWork.description && (
+        <p>{howToWork.description}</p>
+      )}
     </header>
 
-    <div class="process__grid">
-      {process.steps.map((step) => (
-        <article class="process-card">
-          <div class="process-card__top">
+    <div class="how-to-work__grid">
+      {howToWork.steps.map((step) => (
+        <article class="how-to-work-card">
+          <div class="how-to-work-card__top">
             {step.icon && (
-              <div class="process-card__icon" aria-hidden="true">
-                {step.icon === 'search' && <Search size={34} strokeWidth={1.8} />}
-                {step.icon === 'palette' && <Palette size={34} strokeWidth={1.8} />}
-                {step.icon === 'rocket' && <Rocket size={34} strokeWidth={1.8} />}
-                {step.icon === 'settings' && <Settings size={34} strokeWidth={1.8} />}
+              <div
+                class="how-to-work-card__icon"
+                aria-hidden="true"
+              >
+                {step.icon === 'search' && (
+                  <Search size={34} strokeWidth={1.8} />
+                )}
+
+                {step.icon === 'palette' && (
+                  <Palette size={34} strokeWidth={1.8} />
+                )}
+
+                {step.icon === 'rocket' && (
+                  <Rocket size={34} strokeWidth={1.8} />
+                )}
+
+                {step.icon === 'settings' && (
+                  <Settings size={34} strokeWidth={1.8} />
+                )}
               </div>
             )}
 
-            <span class="process-card__number">{step.number}</span>
+            <span class="how-to-work-card__number">
+              {step.number}
+            </span>
           </div>
 
-          <div class="process-card__content">
+          <div class="how-to-work-card__content">
             <h3>{step.title}</h3>
 
-            {step.description && <p>{step.description}</p>}
+            {step.description && (
+              <p>{step.description}</p>
+            )}
           </div>
         </article>
       ))}
@@ -55,7 +75,7 @@ const { process } = Astro.props
 </section>
 
 <style>
-  .process {
+  .how-to-work {
     width: 100%;
     padding: 0 0 110px;
     background: #ffffff;
@@ -63,17 +83,17 @@ const { process } = Astro.props
     overflow: hidden;
   }
 
-  .process__container {
+  .how-to-work__container {
     width: min(1375px, calc(100% - 80px));
     margin: 0 auto;
   }
 
-  .process__header {
+  .how-to-work__header {
     margin: 0 auto 68px;
     text-align: center;
   }
 
-  .process__header h2 {
+  .how-to-work__header h2 {
     margin: 0;
     color: #004681;
     font-family: var(--font-heading);
@@ -83,7 +103,7 @@ const { process } = Astro.props
     letter-spacing: -0.8px;
   }
 
-  .process__header p {
+  .how-to-work__header p {
     max-width: 950px;
     margin: 22px auto 0;
     color: #202020;
@@ -92,13 +112,13 @@ const { process } = Astro.props
     line-height: 1.5;
   }
 
-  .process__grid {
+  .how-to-work__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 26px;
   }
 
-  .process-card {
+  .how-to-work-card {
     position: relative;
     min-height: 310px;
     padding: 34px;
@@ -113,7 +133,7 @@ const { process } = Astro.props
       border-color 0.35s ease;
   }
 
-  .process-card::before {
+  .how-to-work-card::before {
     content: "";
     position: absolute;
     top: -1px;
@@ -127,7 +147,7 @@ const { process } = Astro.props
     transition: width 0.4s ease;
   }
 
-  .process-card::after {
+  .how-to-work-card::after {
     content: "";
     position: absolute;
     top: -165px;
@@ -145,7 +165,7 @@ const { process } = Astro.props
       transform 0.75s ease;
   }
 
-  .process-card__top {
+  .how-to-work-card__top {
     position: relative;
     z-index: 2;
     display: flex;
@@ -153,7 +173,7 @@ const { process } = Astro.props
     justify-content: space-between;
   }
 
-  .process-card__icon {
+  .how-to-work-card__icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +188,7 @@ const { process } = Astro.props
       transform 0.35s ease;
   }
 
-  .process-card__number {
+  .how-to-work-card__number {
     position: relative;
     z-index: 3;
     padding-top: 2px;
@@ -179,13 +199,13 @@ const { process } = Astro.props
     transition: color 0.35s ease;
   }
 
-  .process-card__content {
+  .how-to-work-card__content {
     position: relative;
     z-index: 3;
     margin-top: 32px;
   }
 
-  .process-card h3 {
+  .how-to-work-card h3 {
     margin: 0;
     color: #004681;
     font-family: var(--font-heading);
@@ -197,7 +217,7 @@ const { process } = Astro.props
       transform 0.35s ease;
   }
 
-  .process-card p {
+  .how-to-work-card p {
     max-width: 285px;
     margin: 14px 0 0;
     color: #292929;
@@ -207,107 +227,107 @@ const { process } = Astro.props
     transition: color 0.35s ease;
   }
 
-  .process-card:hover {
+  .how-to-work-card:hover {
     z-index: 10;
     transform: translateY(-9px);
     border-color: #d4dfe9;
     box-shadow: 0 18px 36px rgba(30, 60, 90, 0.09);
   }
 
-  .process-card:hover::before {
+  .how-to-work-card:hover::before {
     width: 100%;
   }
 
-  .process-card:hover::after {
+  .how-to-work-card:hover::after {
     opacity: 1;
     transform: scale(1);
   }
 
-  .process-card:hover .process-card__icon {
+  .how-to-work-card:hover .how-to-work-card__icon {
     background: #004681;
     color: #ffffff;
     transform: scale(1.02);
   }
 
-  .process-card:hover .process-card__number {
+  .how-to-work-card:hover .how-to-work-card__number {
     color: #7899b1;
   }
 
-  .process-card:hover h3 {
+  .how-to-work-card:hover h3 {
     transform: translateX(7px);
   }
 
   @media (max-width: 900px) {
-    .process {
+    .how-to-work {
       padding-bottom: 90px;
     }
 
-    .process__container {
+    .how-to-work__container {
       width: 100%;
     }
 
-    .process__header {
+    .how-to-work__header {
       padding: 0 40px;
       margin-bottom: 55px;
     }
 
-    .process__grid {
+    .how-to-work__grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       padding: 0 40px;
     }
 
-    .process-card {
+    .how-to-work-card {
       min-height: 300px;
     }
   }
 
   @media (max-width: 600px) {
-    .process {
+    .how-to-work {
       padding-bottom: 80px;
     }
 
-    .process__header {
+    .how-to-work__header {
       padding: 0 28px;
       margin-bottom: 45px;
     }
 
-    .process__header h2 {
+    .how-to-work__header h2 {
       font-size: 28px;
       font-weight: 500;
     }
 
-    .process__header p {
+    .how-to-work__header p {
       margin-top: 18px;
       font-size: 17px;
       line-height: 1.55;
     }
 
-    .process__grid {
+    .how-to-work__grid {
       grid-template-columns: 1fr;
       gap: 16px;
       padding: 0 20px;
     }
 
-    .process-card {
+    .how-to-work-card {
       min-height: 270px;
       padding: 28px;
     }
 
-    .process-card__content {
+    .how-to-work-card__content {
       margin-top: 28px;
     }
 
-    .process-card h3 {
+    .how-to-work-card h3 {
       font-size: 21px;
     }
 
-    .process-card p {
+    .how-to-work-card p {
       margin-top: 12px;
       font-size: 16px;
     }
 
-    .process-card:hover {
+    .how-to-work-card:hover {
       transform: translateY(-7px);
     }
   }

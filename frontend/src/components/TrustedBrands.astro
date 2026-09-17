@@ -1,0 +1,195 @@
+---
+import { urlFor } from '../lib/sanity'
+
+interface Brand {
+  name: string
+  alt: string
+  logo: {
+    asset: {
+      _ref: string
+    }
+  }
+}
+
+interface Props {
+  trustedBrands: {
+    heading: string
+    brands: Brand[]
+  }
+}
+
+const { trustedBrands } = Astro.props
+---
+
+<section class="trusted-brands">
+  <div class="trusted-brands__container">
+    <h2>{trustedBrands.heading}</h2>
+
+    <div class="trusted-brands__viewport">
+      <div class="trusted-brands__track">
+        {trustedBrands.brands.map((brand) => (
+          <div class="trusted-brand">
+            <img
+              src={urlFor(brand.logo).url()}
+              alt={brand.alt || brand.name}
+              loading="lazy"
+            />
+          </div>
+        ))}
+
+        {trustedBrands.brands.map((brand) => (
+          <div class="trusted-brand" aria-hidden="true">
+            <img
+              src={urlFor(brand.logo).url()}
+              alt=""
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trusted-brands {
+    width: 100%;
+    padding: 90px 0 100px;
+    background: #ffffff;
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  .trusted-brands__container {
+    width: 100%;
+  }
+
+  .trusted-brands h2 {
+    margin: 0 0 78px;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 37px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    text-align: center;
+  }
+
+  .trusted-brands__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .trusted-brands__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 88px;
+    animation: trusted-brands-scroll 30s linear infinite;
+    will-change: transform;
+  }
+
+  .trusted-brand {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 145px;
+    height: 52px;
+    cursor: pointer;
+  }
+
+  .trusted-brand img {
+    display: block;
+    width: auto;
+    max-width: 155px;
+    height: 40px;
+    object-fit: contain;
+    transform: scale(1);
+    opacity: 1;
+    transition:
+      transform 0.6s ease,
+      opacity 0.3s ease;
+  }
+
+  .trusted-brand:hover img {
+    transform: scale(1.37);
+  }
+
+  .trusted-brands__track:has(.trusted-brand:hover) {
+    animation-play-state: paused;
+  }
+
+  @keyframes trusted-brands-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-50% - 44px));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .trusted-brands {
+      padding: 75px 0 85px;
+    }
+
+    .trusted-brands h2 {
+      margin-bottom: 60px;
+      font-size: 35px;
+    }
+
+    .trusted-brands__track {
+      gap: 65px;
+      animation-duration: 26s;
+    }
+
+    .trusted-brand {
+      min-width: 125px;
+    }
+
+    .trusted-brand img {
+      max-width: 135px;
+      height: 36px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .trusted-brands {
+      padding: 65px 0 75px;
+    }
+
+    .trusted-brands h2 {
+      margin: 0 28px 70px;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .trusted-brands__track {
+      gap: 48px;
+      animation-duration: 22s;
+    }
+
+    .trusted-brand {
+      min-width: 105px;
+      height: 44px;
+    }
+
+    .trusted-brand img {
+      max-width: 115px;
+      height: 30px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trusted-brands__track {
+      animation: none;
+      transform: translateX(0);
+    }
+
+    .trusted-brand:hover img {
+      transform: none;
+    }
+  }
+</style>

@@ -36,7 +36,7 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
-  process {
+  howToWork {
     heading,
     description,
     steps[] {
@@ -77,6 +77,15 @@ export const homePageQuery = `*[_type == "homePage"][0]{
         icon,
         openInNewTab
       }
+    }
+  },
+
+  trustedBrands {
+    heading,
+    brands[] {
+     name,
+     alt,
+     logo
     }
   },
 

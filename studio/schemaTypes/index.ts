@@ -3,8 +3,9 @@ import { hero } from './hero';
 import { seo } from './seo';
 import { trackRecord } from './trackRecord';
 import { services } from './services';
-import { process } from './process';
+import { howToWork } from './howToWork';
 import { successStories } from './successStories';
+import { trustedBrands } from './trustedBrands';
 import { homePage } from './homePage';
 
-export const schemaTypes = [cta, seo, hero, trackRecord, services, process, successStories, homePage];
+export const schemaTypes = [cta, seo, hero, trackRecord, services, howToWork, successStories, trustedBrands, homePage];

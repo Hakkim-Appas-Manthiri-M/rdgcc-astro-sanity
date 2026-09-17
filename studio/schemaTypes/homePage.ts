@@ -32,15 +32,21 @@ export const homePage = defineType({
         }),
 
         defineField({
-            name: 'process',
+            name: 'howToWork',
             title: 'How We Work',
-            type: 'process',
+            type: 'howToWork',
         }),
 
         defineField({
             name: 'successStories',
             title: 'Success Stories',
             type: 'successStories',
+        }),
+
+        defineField({
+            name: 'trustedBrands',
+            title: 'Trusted by Global Brands',
+            type: 'trustedBrands',
         }),
 
         defineField({

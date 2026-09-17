@@ -1,8 +1,8 @@
 import { defineField, defineType } from 'sanity'
 import { ctaIconOptions } from './cta'
 
-export const process = defineType({
-  name: 'process',
+export const howToWork = defineType({
+  name: 'howToWork',
   title: 'How We Work Section',
   type: 'object',
 
@@ -23,15 +23,15 @@ export const process = defineType({
 
     defineField({
       name: 'steps',
-      title: 'Process Steps',
+      title: 'Works Steps',
       type: 'array',
       validation: (Rule) => Rule.min(4).max(4),
 
       of: [
         {
           type: 'object',
-          name: 'processStep',
-          title: 'Process Step',
+          name: 'workStep',
+          title: 'Works Step',
 
           fields: [
             defineField({
