@@ -1,0 +1,455 @@
+---
+import { urlFor } from '../lib/sanity'
+
+interface Testimonial {
+  company: string
+  location?: string
+  quote: string
+  personName: string
+  personRole: string
+  photo?: {
+    asset: {
+      _ref: string
+    }
+  }
+}
+
+interface Props {
+  clientAppreciation: {
+    heading: string
+    testimonials: Testimonial[]
+  }
+}
+
+const { clientAppreciation } = Astro.props
+---
+
+<section class="client-appreciation">
+  <div class="client-appreciation__container">
+    <header class="client-appreciation__header">
+      <h2>{clientAppreciation.heading}</h2>
+    </header>
+
+    <div
+      class="testimonial-carousel"
+      data-testimonials={clientAppreciation.testimonials.length}
+    >
+      <div class="testimonial-carousel__viewport">
+        <div class="testimonial-carousel__track">
+          {clientAppreciation.testimonials.map((testimonial, index) => (
+            <article
+              class:list={[
+                'testimonial',
+                { 'testimonial--active': index === 0 },
+              ]}
+            >
+              <div class="testimonial__photo">
+                {testimonial.photo && (
+                  <img
+                    src={urlFor(testimonial.photo).url()}
+                    alt={testimonial.personName}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                )}
+              </div>
+
+              <div class="testimonial__content">
+                <div class="testimonial__company">
+                  <span>{testimonial.company}</span>
+
+                  {testimonial.location && (
+                    <>
+                      <span class="testimonial__separator">·</span>
+                      <span>{testimonial.location}</span>
+                    </>
+                  )}
+                </div>
+
+                <blockquote>
+                  "{testimonial.quote}"
+                </blockquote>
+
+                <div class="testimonial__person">
+                  <h3>{testimonial.personName}</h3>
+                  <p>{testimonial.personRole}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="testimonial-carousel__dots" aria-label="Testimonials">
+        {clientAppreciation.testimonials.map((testimonial, index) => (
+          <button
+            type="button"
+            class:list={[
+              'testimonial-dot',
+              { 'testimonial-dot--active': index === 0 },
+            ]}
+            data-index={index}
+            aria-label={`Show testimonial ${index + 1}`}
+            aria-current={index === 0 ? 'true' : undefined}
+          >
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const carousels = document.querySelectorAll<HTMLElement>(
+    '.testimonial-carousel',
+  )
+
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>(
+      '.testimonial-carousel__track',
+    )
+
+    const slides = carousel.querySelectorAll<HTMLElement>(
+      '.testimonial',
+    )
+
+    const dots = carousel.querySelectorAll<HTMLButtonElement>(
+      '.testimonial-dot',
+    )
+
+    if (!track || slides.length <= 1) return
+
+    let currentIndex = 0
+    let intervalId: ReturnType<typeof setInterval> | undefined
+
+    const updateCarousel = (index: number) => {
+      currentIndex = index
+
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle(
+          'testimonial--active',
+          slideIndex === index,
+        )
+      })
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === index
+
+        dot.classList.toggle(
+          'testimonial-dot--active',
+          isActive,
+        )
+
+        if (isActive) {
+          dot.setAttribute('aria-current', 'true')
+        } else {
+          dot.removeAttribute('aria-current')
+        }
+      })
+    }
+
+    const startCarousel = () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+
+      intervalId = setInterval(() => {
+        const nextIndex =
+          (currentIndex + 1) % slides.length
+
+        updateCarousel(nextIndex)
+      }, 6000)
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = Number(dot.dataset.index)
+
+        updateCarousel(index)
+        startCarousel()
+      })
+    })
+
+    updateCarousel(0)
+    startCarousel()
+  })
+</script>
+
+<style>
+  .client-appreciation {
+    width: 100%;
+    padding: 65px 0 65px;
+    background: #f7f8fa;
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  .client-appreciation__container {
+    width: min(1375px, calc(100% - 80px));
+    margin: 0 auto;
+  }
+
+  .client-appreciation__header {
+    margin-bottom: 55px;
+    text-align: center;
+  }
+
+  .client-appreciation__header h2 {
+    margin: 0;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 37px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .testimonial-carousel {
+    width: 100%;
+  }
+
+  .testimonial-carousel__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .testimonial-carousel__track {
+    display: grid;
+    width: 100%;
+  }
+
+  .testimonial {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: 105px minmax(0, 1fr);
+    column-gap: 34px;
+    align-items: start;
+    padding: 0 145px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.7 ease, visibility 0.7s ease;
+  }
+
+  .testimonial--active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .testimonial__photo {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e7edf2;
+    box-shadow: 0 12px 25px rgba(30, 60, 90, 0.1);
+  }
+
+  .testimonial__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonial--active .testimonial__photo {
+    animation: testimonial-photo-slide 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes testimonial-photo-slide {
+    from {
+      opacity: 0;
+      transform: translateX(35px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .testimonial__content {
+    min-width: 0;
+    padding-top: 5px;
+  }
+
+  .testimonial__company {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    color: #004681;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1.4px;
+    line-height: 1.5;
+  }
+
+  .testimonial__separator {
+    color: #004681;
+  }
+
+  .testimonial blockquote {
+    max-width: 900px;
+    margin: 24px 0 0;
+    color: #151515;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  .testimonial__person {
+    margin-top: 35px;
+  }
+
+  .testimonial__person h3 {
+    margin: 0;
+    color: #171717;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .testimonial__person p {
+    margin: 5px 0 0;
+    color: #171717;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .testimonial-carousel__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 38px;
+  }
+
+  .testimonial-dot {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #ccd9e5;
+    cursor: pointer;
+    transition:
+      width 0.35s ease,
+      background-color 0.35s ease;
+  }
+
+  .testimonial-dot--active {
+    width: 34px;
+    background: #004681;
+  }
+
+  .testimonial-dot:hover {
+    background: #7899b1;
+  }
+
+  .testimonial-dot--active:hover {
+    background: #004681;
+  }
+
+  @media (max-width: 900px) {
+    .client-appreciation {
+      padding: 75px 0 80px;
+    }
+
+    .client-appreciation__container {
+      width: 100%;
+    }
+
+    .client-appreciation__header {
+      padding: 0 40px;
+      margin-bottom: 60px;
+    }
+
+    .testimonial {
+      grid-template-columns: 105px minmax(0, 1fr);
+      column-gap: 28px;
+      padding: 0 55px;
+    }
+
+    .testimonial__photo {
+      width: 105px;
+      height: 105px;
+    }
+
+    .testimonial blockquote {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .client-appreciation {
+      padding: 65px 0 70px;
+    }
+
+    .client-appreciation__header {
+      padding: 0 28px;
+      margin-bottom: 50px;
+    }
+
+    .client-appreciation__header h2 {
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .testimonial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 25px;
+      text-align: center;
+    }
+
+    .testimonial__photo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .testimonial__content {
+      width: 100%;
+      padding-top: 26px;
+    }
+
+    .testimonial__company {
+      justify-content: center;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .testimonial blockquote {
+      margin-top: 22px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .testimonial__person {
+      margin-top: 28px;
+    }
+
+    .testimonial__person h3 {
+      font-size: 20px;
+    }
+
+    .testimonial__person p {
+      font-size: 15px;
+    }
+
+    .testimonial-carousel__dots {
+      margin-top: 40px;
+      gap: 9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial {
+      transition: none;
+    }
+  }
+</style>

@@ -50,6 +50,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'clientAppreciation',
+            title: 'Client Appreciation',
+            type: 'clientAppreciation',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

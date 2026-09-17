@@ -89,6 +89,18 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  clientAppreciation {
+    heading,
+    testimonials[] {
+      company,
+      location,
+      quote,
+      personName,
+      personRole,
+      photo
+    }
+  },
+
   seo {
     title,
     description

@@ -5,6 +5,7 @@ import Services from '../components/Services.astro'
 import HowToWork from '../components/HowToWork.astro'
 import SuccessStories from '../components/SuccessStories.astro'
 import TrustedBrands from '../components/TrustedBrands.astro'
+import ClientAppreciation from '../components/ClientAppreciation.astro'
 import { sanityClient } from '../lib/sanity'
 import { homePageQuery } from '../lib/queries'
 
@@ -62,6 +63,7 @@ if (!page) {
       <HowToWork howToWork={page.howToWork} />
       <SuccessStories successStories={page.successStories} />
       <TrustedBrands trustedBrands={page.trustedBrands} />
+      <ClientAppreciation clientAppreciation={page.clientAppreciation} />
     </main>
   </body>
 </html>
