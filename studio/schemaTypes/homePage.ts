@@ -62,6 +62,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'faq',
+            title: 'FAQ Section',
+            type: 'faq',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

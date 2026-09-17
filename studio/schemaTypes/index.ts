@@ -9,5 +9,13 @@ import { successStories } from './successStories';
 import { trustedBrands } from './trustedBrands';
 import { clientAppreciation } from './clientAppreciation';
 import { seamlessCollaboration } from './seamlessCollaboration';
+import { faq } from './faq';
 
-export const schemaTypes = [homePage, cta, seo, hero, trackRecord, services, howToWork, successStories, trustedBrands, clientAppreciation, seamlessCollaboration];
+export const schemaTypes = [
+    homePage, cta,
+    seo, hero,
+    trackRecord, services,
+    howToWork, successStories,
+    trustedBrands, clientAppreciation,
+    seamlessCollaboration, faq
+];

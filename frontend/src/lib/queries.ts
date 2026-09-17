@@ -112,6 +112,25 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  faq {
+    heading,
+    items[] {
+      category,
+      question,
+      answer,
+      ctaLabel,
+      ctaUrl,
+      triggerIcon,
+      openIcon,
+      ctaIcon,
+    },
+    exploreCta {
+      label,
+      url,
+      openInNewTab
+    }
+  },
+
   seo {
     title,
     description

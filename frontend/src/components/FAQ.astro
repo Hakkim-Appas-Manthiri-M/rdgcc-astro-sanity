@@ -1,0 +1,469 @@
+---
+import {
+  ChevronDown,
+  ChevronRight,
+} from 'lucide-react'
+
+interface FAQItem {
+  category: string
+  question: string
+  answer: string
+  ctaLabel?: string
+  ctaUrl?: string
+}
+
+interface Props {
+  faq: {
+    heading: string
+    items: FAQItem[]
+    exploreCta?: {
+      label: string
+      url: string
+      openInNewTab?: boolean
+    }
+  }
+}
+
+const { faq } = Astro.props
+---
+
+<section class="faq">
+  <div class="faq__container">
+
+    <header class="faq__header">
+      <h2>{faq.heading}</h2>
+    </header>
+
+    <div class="faq__list">
+      {faq.items.map((item, index) => (
+        <article class="faq-item">
+          <button
+            type="button"
+            class="faq-item__trigger"
+            aria-expanded={index === 0 ? 'true' : 'false'}
+          >
+            <span class="faq-item__category">
+              {item.category}
+            </span>
+
+            <span
+              class="faq-item__icon"
+              aria-hidden="true"
+            >
+              <ChevronDown
+                size={20}
+                strokeWidth={1.8}
+              />
+            </span>
+          </button>
+
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+
+              <h3>
+                Q: {item.question}
+              </h3>
+
+              <p>{item.answer}</p>
+
+              {item.ctaLabel && item.ctaUrl && (
+                <a
+                  href={item.ctaUrl}
+                  class="faq-item__link"
+                >
+                  <span>{item.ctaLabel}</span>
+
+                  <span
+                    class="faq-item__cta-icon"
+                    aria-hidden="true"
+                  >
+                    <ChevronRight
+                      size={18}
+                      strokeWidth={1.8}
+                    />
+                  </span>
+                </a>
+              )}
+
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {faq.exploreCta && (
+      <div class="faq__cta">
+        <a
+          href={faq.exploreCta.url}
+          class="faq__explore"
+          target={
+            faq.exploreCta.openInNewTab
+              ? '_blank'
+              : undefined
+          }
+          rel={
+            faq.exploreCta.openInNewTab
+              ? 'noopener noreferrer'
+              : undefined
+          }
+        >
+          {faq.exploreCta.label}
+        </a>
+      </div>
+    )}
+
+  </div>
+</section>
+
+<script>
+  const faqItems =
+    document.querySelectorAll<HTMLElement>(
+      '.faq-item',
+    )
+
+  faqItems.forEach((item) => {
+    const trigger =
+      item.querySelector<HTMLButtonElement>(
+        '.faq-item__trigger',
+      )
+
+    if (!trigger) return
+
+    item.classList.remove('faq-item--open')
+    trigger.setAttribute(
+      'aria-expanded',
+      'false',
+    )
+
+    trigger.addEventListener('click', () => {
+      const isOpen =
+        item.classList.contains('faq-item--open')
+
+      faqItems.forEach((otherItem) => {
+        otherItem.classList.remove(
+          'faq-item--open',
+        )
+
+        const otherTrigger =
+          otherItem.querySelector<HTMLButtonElement>(
+            '.faq-item__trigger',
+          )
+
+        otherTrigger?.setAttribute(
+          'aria-expanded',
+          'false',
+        )
+      })
+
+      if (!isOpen) {
+        item.classList.add('faq-item--open')
+
+        trigger.setAttribute(
+          'aria-expanded',
+          'true',
+        )
+      }
+    })
+  })
+</script>
+
+<style>
+  .faq {
+    width: 100%;
+    padding: 100px 0 110px;
+    background: #f6f7f8;
+    font-family: var(--font-body);
+  }
+
+  .faq__container {
+    width: min(1000px, calc(100% - 60px));
+    margin: 0 auto;
+  }
+
+  .faq__header {
+    margin: 0 auto 62px;
+    text-align: center;
+  }
+
+  .faq__header h2 {
+    margin: 0;
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 37px;
+    font-weight: 550;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq-item {
+    overflow: hidden;
+    border: 1px solid #e0e6eb;
+    border-radius: 16px;
+    background: #ffffff;
+  }
+
+  .faq-item__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 82px;
+    padding: 0 34px;
+    border: 0;
+    background: transparent;
+    color: #004681;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .faq-item__category {
+    color: #004681;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .faq-item__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    color: #171717;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item--open .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows 0.45s
+      cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .faq-item__answer-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 34px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.4s ease,
+      padding 0.45s ease;
+  }
+
+  .faq-item--open .faq-item__answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-item--open .faq-item__answer-inner {
+    padding-top: 3px;
+    padding-bottom: 34px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .faq-item__answer-inner h3 {
+    margin: 0;
+    color: #171717;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .faq-item__answer-inner p {
+    max-width: 980px;
+    margin: 18px 0 0;
+    color: #171717;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .faq-item__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 20px;
+    color: #004681;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .faq-item__link:hover {
+    color: #003762;
+  }
+
+  .faq-item__cta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+
+  .faq__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .faq__explore {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 28px;
+    border: 1px solid #004681;
+    border-radius: 999px;
+    background: #004681;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .faq__explore:hover {
+    border-color: #003762;
+    background: #003762;
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 900px) {
+    .faq {
+      padding: 85px 0 95px;
+    }
+
+    .faq__container {
+      width: calc(100% - 90px);
+    }
+
+    .faq__header {
+      margin-bottom: 52px;
+    }
+
+    .faq__header h2 {
+      font-size: 36px;
+    }
+
+    .faq-item__trigger {
+      min-height: 76px;
+      padding: 0 28px;
+    }
+
+    .faq-item__category {
+      font-size: 19px;
+    }
+
+    .faq-item__answer-inner {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .faq {
+      padding: 65px 0 75px;
+    }
+
+    .faq__container {
+      width: calc(100% - 60px);
+    }
+
+    .faq__header {
+      margin-bottom: 40px;
+    }
+
+    .faq__header h2 {
+      font-size: 25px;
+      line-height: 1.25;
+    }
+
+    .faq__list {
+      gap: 15px;
+    }
+
+    .faq-item {
+      border-radius: 11px;
+    }
+
+    .faq-item__trigger {
+      min-height: 100px;
+      padding: 0 30px;
+    }
+
+    .faq-item__category {
+      max-width: calc(100% - 45px);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .faq-item__icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .faq-item__answer-inner {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .faq-item--open .faq-item__answer-inner {
+      padding-bottom: 25px;
+    }
+
+    .faq-item__answer-inner h3 {
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .faq-item__answer-inner p {
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .faq-item__link {
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .faq__cta {
+      margin-top: 38px;
+    }
+
+    .faq__explore {
+      min-height: 46px;
+      padding: 0 23px;
+      font-size: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item__answer,
+    .faq-item__answer-inner,
+    .faq-item__icon,
+    .faq__explore {
+      transition: none;
+    }
+  }
+</style>
