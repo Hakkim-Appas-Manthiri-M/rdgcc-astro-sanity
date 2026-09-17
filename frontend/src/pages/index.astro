@@ -9,6 +9,7 @@ import TrustedBrands from '../components/TrustedBrands.astro'
 import ClientAppreciation from '../components/ClientAppreciation.astro'
 import SeamlessCollaboration from '../components/SeamlessCollaboration.astro'
 import FAQ from '../components/FAQ.astro'
+import FinalCta from '../components/FinalCta.astro'
 import { sanityClient } from '../lib/sanity'
 import { homePageQuery } from '../lib/queries'
 
@@ -70,6 +71,7 @@ if (!page) {
       <ClientAppreciation clientAppreciation={page.clientAppreciation} />
       <SeamlessCollaboration seamlessCollaboration={page.seamlessCollaboration} />
       <FAQ faq={page.faq} />
+      <FinalCta finalCta={page.finalCta} />
     </main>
   </body>
 </html>

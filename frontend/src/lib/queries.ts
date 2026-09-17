@@ -151,6 +151,18 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  finalCta {
+    heading,
+    description,
+    backgroundImage,
+    cta {
+      label,
+      url,
+      icon,
+      openInNewTab
+    }
+  },
+
   seo {
     title,
     description
