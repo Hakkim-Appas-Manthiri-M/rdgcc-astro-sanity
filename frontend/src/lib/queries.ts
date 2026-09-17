@@ -101,6 +101,17 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  seamlessCollaboration {
+    heading,
+    description,
+    items[] {
+      title,
+      description,
+      image,
+      alt
+    }
+  },
+
   seo {
     title,
     description

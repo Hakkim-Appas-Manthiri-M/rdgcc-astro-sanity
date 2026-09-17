@@ -56,6 +56,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'seamlessCollaboration',
+            title: 'Seamless Collaboration',
+            type: 'seamlessCollaboration',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',
