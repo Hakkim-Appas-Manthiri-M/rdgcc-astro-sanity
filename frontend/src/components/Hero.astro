@@ -64,12 +64,13 @@ const { hero } = Astro.props
     align-items: center;
     gap: 60px;
 
-    max-width: 1400px;
+    width: 100%;
     min-height: 645px;
-    margin: auto;
-    padding: 70px 60px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 30px 125px;
 
-    background: #fff;
+    background: #f8fafc;
     font-family: var(--font-body);
   }
 
@@ -83,7 +84,7 @@ const { hero } = Astro.props
     margin: 0;
     color: #004681;
     font-family: var(--font-heading);
-    font-size: clamp(40px, 3vw, 46px);
+    font-size: clamp(50px, 5vw, 46px);
     font-weight: 500;
     line-height: 1.08;
     letter-spacing: 1px;
@@ -193,27 +194,42 @@ const { hero } = Astro.props
     background: #4b82aa;
   }
 
-  @media (max-width: 1100px) {
-    .visual {
-      height: 400px;
-    }
-
-    .panel {
-      inset: 55px 20px 30px;
-    }
-
-    .shape--top,
-    .shape--bottom {
-      width: 135px;
-      height: 135px;
-    }
+ @media (max-width: 1100px) and (min-width: 901px) {
+  .hero {
+    min-height: 407px;
+    padding: 25px 50px 40px;
+    gap: 35px;
   }
+
+  .visual {
+    height: 400px;
+  }
+
+  .panel {
+    inset: 55px 45px 30px;
+  }
+
+  .shape--top,
+  .shape--bottom {
+    width: 135px;
+    height: 135px;
+  }
+}
 
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
       min-height: auto;
-      padding: 90px 40px;
+      padding: 35px 40px 60px;
+    }
+
+    h1 {
+      font-size: 50px;
+      letter-spacing: -1.5px;
+    }
+
+    .description {
+      font-size: 20px;
     }
 
     .visual {
@@ -234,7 +250,7 @@ const { hero } = Astro.props
   @media (max-width: 600px) {
     .hero {
       display: block;
-      padding: 50px 20px 60px;
+      padding: 30px 20px 60px;
     }
 
     h1 {

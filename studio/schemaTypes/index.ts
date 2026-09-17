@@ -10,9 +10,11 @@ import { trustedBrands } from './trustedBrands';
 import { clientAppreciation } from './clientAppreciation';
 import { seamlessCollaboration } from './seamlessCollaboration';
 import { faq } from './faq';
+import { navbar } from './navbar';
 
 export const schemaTypes = [
-    homePage, cta,
+    homePage, navbar,
+    cta,
     seo, hero,
     trackRecord, services,
     howToWork, successStories,

@@ -14,6 +14,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'navbar',
+            title: 'Navbar',
+            type: 'navbar',
+        }),
+
+        defineField({
             name: 'hero',
             title: 'Hero Section',
             type: 'hero',

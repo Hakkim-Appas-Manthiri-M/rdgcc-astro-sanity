@@ -2,6 +2,26 @@ export const homePageQuery = `*[_type == "homePage"][0]{
   _id,
   title,
 
+  navbar {
+    logo,
+    logoAlt,
+    links[] {
+      label,
+      url,
+      hasDropdown,
+      dropdownItems[] {
+        label,
+        url
+      }
+    },
+    cta {
+      label,
+      url,
+      icon,
+      openInNewTab
+    }
+  },
+
   hero {
     eyebrow,
     heading,
