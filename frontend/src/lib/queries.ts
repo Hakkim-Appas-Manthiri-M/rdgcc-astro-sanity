@@ -163,6 +163,36 @@ export const homePageQuery = `*[_type == "homePage"][0]{
     }
   },
 
+  footer {
+    logo,
+    description,
+    partnerBadge,
+    services[] {
+      label,
+      url
+    },
+    companyLinks[] {
+      label,
+      url
+    },
+    successStories[] {
+      label,
+      url
+    },
+    contact {
+      email,
+      phone,
+      address
+    },
+    socialLinks[] {
+      platform,
+      url
+    },
+    privacyUrl,
+    termsUrl,
+    copyright
+  },
+
   seo {
     title,
     description

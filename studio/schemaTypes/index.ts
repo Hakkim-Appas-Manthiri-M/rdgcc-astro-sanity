@@ -12,6 +12,7 @@ import { seamlessCollaboration } from './seamlessCollaboration';
 import { faq } from './faq';
 import { navbar } from './navbar';
 import { finalCta } from './finalCta';
+import { footer } from './footer';
 
 export const schemaTypes = [
     homePage, navbar,
@@ -20,5 +21,6 @@ export const schemaTypes = [
     trackRecord, services,
     howToWork, successStories,
     trustedBrands, clientAppreciation,
-    seamlessCollaboration, faq, finalCta,
+    seamlessCollaboration, faq, 
+    finalCta, footer
 ];

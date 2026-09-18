@@ -80,6 +80,12 @@ export const homePage = defineType({
         }),
 
         defineField({
+            name: 'footer',
+            title: 'Footer',
+            type: 'footer',
+        }),
+
+        defineField({
             name: 'seo',
             title: 'SEO',
             type: 'seo',

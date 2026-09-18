@@ -10,6 +10,7 @@ import ClientAppreciation from '../components/ClientAppreciation.astro'
 import SeamlessCollaboration from '../components/SeamlessCollaboration.astro'
 import FAQ from '../components/FAQ.astro'
 import FinalCta from '../components/FinalCta.astro'
+import Footer from '../components/Footer.astro'
 import { sanityClient } from '../lib/sanity'
 import { homePageQuery } from '../lib/queries'
 
@@ -72,6 +73,7 @@ if (!page) {
       <SeamlessCollaboration seamlessCollaboration={page.seamlessCollaboration} />
       <FAQ faq={page.faq} />
       <FinalCta finalCta={page.finalCta} />
+      <Footer footer={page.footer} />
     </main>
   </body>
 </html>
