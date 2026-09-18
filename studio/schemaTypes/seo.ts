@@ -18,7 +18,16 @@ export const seo = defineType({
             title: 'SEO Description',
             type: 'text',
             rows: 3,
-            validation: (Rule) => Rule.max(160).warning('Keep the SEO description under 160 characters.'),
-        })
+        }),
+
+        defineField({
+            name: 'logo',
+            title: 'SEO Logo / Favicon',
+            type: 'image',
+            options: {
+                hotspot: true,
+            },
+            description: 'Logo used for the browser favicon and SEO/social metadata.',
+        }),
     ],
 })

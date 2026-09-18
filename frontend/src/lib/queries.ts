@@ -195,6 +195,7 @@ export const homePageQuery = `*[_type == "homePage"][0]{
 
   seo {
     title,
-    description
+    description,
+    logo
   }
 }`
