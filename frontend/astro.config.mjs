@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'http://localhost:4321',
+  site: 'https://rdgcc-astro-sanity.sanity.studio',
 
   integrations: [
     react(),
